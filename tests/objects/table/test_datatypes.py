@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 
 from pooltool.objects.table.datatypes import Table
+from pooltool.objects.table.collection import TableName, prebuilt_specs
 
 
 @pytest.fixture
@@ -59,3 +60,34 @@ def test_set_cushion_height(table):
 
         # x,y coordinates unchanged
         assert np.array_equal(segment.center[:2], initial_circular[id]["center"][:2])
+
+
+def test_nine_foot_diamond_table_specs():
+    """Test that NINE_FOOT_DIAMOND table has correct dimensions."""
+    specs = prebuilt_specs(TableName.NINE_FOOT_DIAMOND)
+    
+    # Test playing surface dimensions (9 feet x 4.5 feet)
+    assert specs.l == 2.54  # 9 feet in meters
+    assert specs.w == 1.27  # 4.5 feet in meters
+    
+    # Test that it's a pocket table
+    assert hasattr(specs, 'corner_pocket_width')
+    assert hasattr(specs, 'side_pocket_width')
+    
+    # Test model descriptor
+    assert specs.model_descr.name == "null"
+
+
+def test_nine_foot_diamond_table_creation():
+    """Test that NINE_FOOT_DIAMOND table can be created successfully."""
+    table = Table.from_table_name(TableName.NINE_FOOT_DIAMOND)
+    
+    # Verify dimensions
+    assert table.w == 2.54
+    assert table.l == 1.27
+    
+    # Verify it has pockets
+    assert len(table.pockets) > 0
+    
+    # Verify it has cushion segments
+    assert len(table.cushion_segments.linear) > 0

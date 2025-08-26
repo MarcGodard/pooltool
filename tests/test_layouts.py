@@ -207,6 +207,9 @@ def test_seed():
         GameType.EIGHTBALL,
         GameType.NINEBALL,
         GameType.SNOOKER,
+        GameType.THREECUSHION,
+        GameType.SANDBOX,
+        GameType.SUMTOTHREE,
     ],
 )
 def test_rack_no_overlapping_balls(game_type: GameType):
