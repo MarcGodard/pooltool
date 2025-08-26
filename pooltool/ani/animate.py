@@ -504,8 +504,9 @@ class Game(Interface):
         plug into.
         """
         # Check if game type was selected from UI, otherwise use config default
-        if hasattr(ani, 'selected_game_type'):
+        if hasattr(ani, "selected_game_type"):
             from pooltool.game.datatypes import GameType
+
             game_type = getattr(GameType, ani.selected_game_type)
         else:
             # Change the gametype by editing ~/.config/pooltool/general.yaml
