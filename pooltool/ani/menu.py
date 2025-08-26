@@ -1064,6 +1064,27 @@ class Menus:
         _default_game_type_map[GameType.NINEBALL] = table_name
         _default_game_type_map[GameType.SANDBOX] = table_name
 
+        # If there's an active game, recreate the scene with new table
+        from pooltool.ani.globals import Global
+        from pooltool.system.datatypes import multisystem
+        
+        if Global.game and len(multisystem):
+            # Store current camera state
+            from pooltool.ani.camera import cam
+            current_cam_state = cam.state
+            
+            # Properly close the existing scene first
+            Global.animate.close_scene()
+            
+            # Recreate the system with new table
+            Global.animate._create_system()
+            
+            # Recreate the visual scene
+            Global.animate.create_scene()
+            
+            # Restore camera position
+            cam.load_state(current_cam_state)
+
     @_update_xml  # type: ignore
     def func_update_game_type_selection(self, value: str, name: str) -> None:
         """Update game type selection and store for new games"""
@@ -1081,6 +1102,23 @@ class Menus:
             ani.selected_game_type = value
         else:
             ani.selected_game_type = value
+
+    @_update_xml  # type: ignore
+    def func_update_camera_view_selection(self, value: str, name: str) -> None:
+        """Update camera view selection and apply to current game"""
+        # Update XML
+        for element in self.current.elements:
+            if element.get("name") == name:
+                break
+        element["xml"].set("selection", value)
+
+        # Store the selected camera view for use when starting new games
+        import pooltool.ani as ani
+
+        if not hasattr(ani, "selected_camera_view"):
+            ani.selected_camera_view = value
+        else:
+            ani.selected_camera_view = value
 
     def func_go_main_menu(self):
         self.show("main_menu")
