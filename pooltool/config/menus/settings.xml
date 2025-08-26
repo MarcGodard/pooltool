@@ -3,7 +3,25 @@
     <backbutton>
         <func>func_go_main_menu</func>
     </backbutton>
-    <text>
-        On the horizon, but don't hold your breath...
-    </text>
+    <subtitle name="table_settings">Table Settings</subtitle>
+    <dropdown name="table_type" selection="NINE_FOOT_DIAMOND">
+        <name>Table Size</name>
+        <description>Select the pool table size for gameplay</description>
+        <option>SEVEN_FOOT_SHOWOOD</option>
+        <option>NINE_FOOT_DIAMOND</option>
+        <option>SNOOKER_GENERIC</option>
+        <func>func_update_table_selection</func>
+    </dropdown>
+    <subtitle name="game_settings">Game Settings</subtitle>
+    <dropdown name="game_type" selection="EIGHTBALL">
+        <name>Game Type</name>
+        <description>Select the type of billiards game to play</description>
+        <option>EIGHTBALL</option>
+        <option>NINEBALL</option>
+        <option>SNOOKER</option>
+        <option>THREECUSHION</option>
+        <option>SANDBOX</option>
+        <option>SUMTOTHREE</option>
+        <func>func_update_game_type_selection</func>
+    </dropdown>
 </menu>

@@ -15,12 +15,14 @@ class TableName(StrEnum):
 
     Attributes:
         SEVEN_FOOT_SHOWOOD:
+        NINE_FOOT_DIAMOND:
         SNOOKER_GENERIC:
         BILLIARD_WIP:
         SUMTOTHREE_WIP:
     """
 
     SEVEN_FOOT_SHOWOOD = auto()
+    NINE_FOOT_DIAMOND = auto()
     SNOOKER_GENERIC = auto()
     BILLIARD_WIP = auto()
     SUMTOTHREE_WIP = auto()
@@ -45,6 +47,25 @@ TABLE_SPECS: dict[TableName, TableSpecs] = {
         height=0.708,
         lights_height=1.99,
         model_descr=TableModelDescr(name="seven_foot_showood"),
+    ),
+    TableName.NINE_FOOT_DIAMOND: PocketTableSpecs(
+        l=2.54,  # 9 feet playing surface
+        w=1.27,  # 4.5 feet playing surface
+        cushion_width=2 * 2.54 / 100,
+        cushion_height=0.64 * 2 * 0.028575,
+        corner_pocket_width=0.118,
+        corner_pocket_angle=5.3,
+        corner_pocket_depth=0.0417,
+        corner_pocket_radius=0.062,
+        corner_jaw_radius=0.02095,
+        side_pocket_width=0.137,
+        side_pocket_angle=7.14,
+        side_pocket_depth=0.0685,
+        side_pocket_radius=0.0645,
+        side_jaw_radius=0.00795,
+        height=0.708,
+        lights_height=1.99,
+        model_descr=TableModelDescr.null(),  # Use scalable null model
     ),
     TableName.SNOOKER_GENERIC: SnookerTableSpecs(
         l=3.5445,
@@ -88,18 +109,18 @@ TABLE_SPECS: dict[TableName, TableSpecs] = {
 
 
 _default_table_type_map: dict[TableType, TableName] = {
-    TableType.POCKET: TableName.SEVEN_FOOT_SHOWOOD,
+    TableType.POCKET: TableName.NINE_FOOT_DIAMOND,
     TableType.SNOOKER: TableName.SNOOKER_GENERIC,
     TableType.BILLIARD: TableName.BILLIARD_WIP,
 }
 
 _default_game_type_map: dict[GameType, TableName] = {
     GameType.EIGHTBALL: TableName.SEVEN_FOOT_SHOWOOD,
-    GameType.NINEBALL: TableName.SEVEN_FOOT_SHOWOOD,
+    GameType.NINEBALL: TableName.NINE_FOOT_DIAMOND,
     GameType.SNOOKER: TableName.SNOOKER_GENERIC,
     GameType.THREECUSHION: TableName.BILLIARD_WIP,
     GameType.SUMTOTHREE: TableName.SUMTOTHREE_WIP,
-    GameType.SANDBOX: TableName.SEVEN_FOOT_SHOWOOD,
+    GameType.SANDBOX: TableName.NINE_FOOT_DIAMOND,
 }
 
 

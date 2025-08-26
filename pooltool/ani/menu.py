@@ -1043,6 +1043,44 @@ class Menus:
     def func_go_settings(self):
         self.show("settings")
 
+    @_update_xml  # type: ignore
+    def func_update_table_selection(self, value, name):
+        """Update table selection and apply to current game"""
+        # Update XML
+        for element in self.current.elements:
+            if element.get("name") == name:
+                break
+        element["xml"].set("selection", value)
+        
+        # Update the default table mappings in collection.py
+        from pooltool.objects.table.collection import _default_game_type_map, TableName
+        from pooltool.game.datatypes import GameType
+        
+        # Convert string to TableName enum
+        table_name = getattr(TableName, value)
+        
+        # Update all pool game types to use selected table
+        _default_game_type_map[GameType.EIGHTBALL] = table_name
+        _default_game_type_map[GameType.NINEBALL] = table_name
+        _default_game_type_map[GameType.SANDBOX] = table_name
+
+    @_update_xml  # type: ignore
+    def func_update_game_type_selection(self, value, name):
+        """Update game type selection and store for new games"""
+        # Update XML
+        for element in self.current.elements:
+            if element.get("name") == name:
+                break
+        element["xml"].set("selection", value)
+        
+        # Store the selected game type for use when starting new games
+        # This could be used by the game setup system
+        import pooltool.ani as ani
+        if not hasattr(ani, 'selected_game_type'):
+            ani.selected_game_type = value
+        else:
+            ani.selected_game_type = value
+
     def func_go_main_menu(self):
         self.show("main_menu")
 

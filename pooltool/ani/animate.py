@@ -503,10 +503,15 @@ class Game(Interface):
         FIXME This is where menu options for game type and further specifications should
         plug into.
         """
-        # Change the gametype by editing ~/.config/pooltool/general.yaml
-        # Available options:
-        #   {eightball, nineball, threecushion, snooker, sandbox, sumtothree}
-        game_type = ani.settings.gameplay.game_type
+        # Check if game type was selected from UI, otherwise use config default
+        if hasattr(ani, 'selected_game_type'):
+            from pooltool.game.datatypes import GameType
+            game_type = getattr(GameType, ani.selected_game_type)
+        else:
+            # Change the gametype by editing ~/.config/pooltool/general.yaml
+            # Available options:
+            #   {eightball, nineball, threecushion, snooker, sandbox, sumtothree}
+            game_type = ani.settings.gameplay.game_type
         game = get_ruleset(game_type)()
         game.players = [
             Player("Player 1"),
