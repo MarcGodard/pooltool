@@ -80,11 +80,12 @@ def test_nine_foot_diamond_table_specs():
 
 def test_nine_foot_diamond_table_creation():
     """Test that NINE_FOOT_DIAMOND table can be created successfully."""
-    table = Table.from_table_name(TableName.NINE_FOOT_DIAMOND)
+    specs = prebuilt_specs(TableName.NINE_FOOT_DIAMOND)
+    table = Table.from_table_specs(specs)
     
-    # Verify dimensions
-    assert table.w == 2.54
-    assert table.l == 1.27
+    # Verify dimensions (note: w and l are swapped in Table vs specs)
+    assert table.w == 1.27  # width
+    assert table.l == 2.54  # length
     
     # Verify it has pockets
     assert len(table.pockets) > 0
