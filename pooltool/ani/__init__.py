@@ -35,7 +35,7 @@ rotate_fine_sensitivity_y = 0
 move_sensitivity = 0.6
 stroke_sensitivity = 0.4
 min_stroke_speed = 0.05  # m/s
-max_stroke_speed = 7  # m/s
+max_stroke_speed = 13  # m/s (matches professional break speeds of 25-30 mph)
 # max backstroke length, as fraction of cue stick length
 backstroke_fraction = 0.5
 # max masse angle
